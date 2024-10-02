@@ -1,4 +1,9 @@
-# CTF Writeups - Nate Baird
+---
+title: Home
+
+---
+
+# CTF Writeups - radiantBear
 
 Welcome! Thanks for checking out my writeups. I hope you find them interesting & helpful!
 If you have suggestions for improving any writeup, I would love to hear your thoughts.

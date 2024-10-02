@@ -1,4 +1,5 @@
 site_name: CTF Writeups - radiantBear
+site_description: Learn how a variety of CTF challenges work!
 site_url: https://web.engr.oregonstate.edu/~bairdn/ctf_writeups/site
 theme:
   name: material
