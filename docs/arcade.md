@@ -74,7 +74,7 @@ async function detectBrickCollision() {
 }
 ```
 
-Right away, we can see that when the app makes a `#!js fetch()` call and make a GET 
+Right away, we can see that when the app calls `#!js fetch()` to make a GET 
 request to `/breakout`, the flag should be returned! The condition when the app makes a 
 GET request (`#!js if (score >= brickColumnCount * brickRowCount)`) is the same as what 
 the backend is looking for: `brickColumnCount` is defined as `6`, and `brickRowCount` is 
@@ -91,7 +91,7 @@ And with that, we have the flag! On to the next half...
 ## Dr. Ralph Fleur's Baffling Raffle
 The second half of tonight's challenge ups the ante a bit. A second game provided to the
 Geriatric Gamblers' Emporium is a raffle where the user can pick 5 numbers and roll to see
-if they correctly guessed the numbers! It'll take a ***very*** long time to correctly
+if they correctly guessed the numbers. It'll take a ***very*** long time to correctly
 guess all 5 numbers, so let's take a look at the Express backend again and see if we can
 find a workaround!
 
@@ -137,33 +137,37 @@ same pattern, so let's break down each condition:
     of a value for this field. If they did, the response "No flag 4 u" will still be 
     returned.
     
-In summary, if the  response "No flag 4 u" will be returned any time the user submits a
-"falsy" value like an empty field for any of the 5 fields or guesses the wrong number for
-any of the 5 fields. But what happens if the user submits a truthy answer that's *not a 
-number at all?* 
+In summary, the response "No flag 4 u" will be returned any time the user submits a
+"falsy" value like an empty field or guesses the wrong number for any of the 5 fields. But
+what happens if the user submits a truthy answer that's *not a number at all?* 
 
 Remember the note from the first half that I said to remember? If not, it was 
-`#!js if (isNaN(score)) ...`. That kind of check isn't happening anywhere in this 
-function! If the developer here had followed the KISS principle, this wouldn't matter. 
-However, the `>` and `<` comparisons give us a loophole to exploit! 
+`#!js if (isNaN(score))`. That kind of check isn't happening anywhere in this function! If
+the developer here had followed the KISS principle and performed inequality checks with 
+the `#!js !=` operator, this wouldn't matter. However, the `>` and `<` comparisons give us
+a loophole to exploit.
 
 How is that? Well, if the `#!js parseInt()` function is given an input that cannot be 
 converted into an integer (say, `#!js "@#$%"`), it will return `NaN`. `NaN` is falsy, but
 the falsy check is performed on the raw input, which could be a truthy string, so that 
-doesn't stop us! The raw input only becomes `NaN` when it is put through the 
-`#!js parseInt()` function. Now for the really fun part, though! As explained on 
+doesn't stop us. The raw input only becomes `NaN` when it is put through the 
+`#!js parseInt()` function. Now for the catch! As explained on 
 [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN),
 
-> When `NaN` is one of the operands of any relational comparison (`>`, `<`, `>=`, `<=`), the result is always `false`.
+> When `NaN` is one of the operands of any relational comparison (`>`, `<`, `>=`, `<=`), 
+> the result is always `false`.
 
 This means that if we provide an input for one of the fields that consists of non-numeric
-characters (but isn't empty, since `""` is falsy!), the conditionals will evaluate as such:
+characters (but isn't empty, since `""` is falsy!), the conditionals will evaluate as 
+such:
 
-1. `#!js !guesses.field_ == false` (not a falsy value)
+1. `#!js !guesses.field_` is `#!js false` (string isn't a falsy value)
 
-2. `#!js parseInt(guesses.field_) > digits[_] == false` (comparison with `NaN`)
+2. `#!js parseInt(guesses.field_) > digits[_]` is `#!js false` (relational comparison with
+    `NaN`)
 
-3. `#!js parseInt(guesses.field_) < digits[_] == false` (comparison with `NaN`)
+3. `#!js parseInt(guesses.field_) < digits[_]` is `#!js false` (relational comparison with
+    `NaN`)
 
 Since these conditions are all `OR`d together, the entire condition in the `#!js if`
 statement will evaluate to `false` as well, meaning we found a way to bypass the "No flag 
@@ -173,7 +177,7 @@ us!
 
 Unfortunately, the app frontend will only let us submit numeric input, so let's take a 
 look at its source and see if we can find a way to send a spoofed GET request like we did
-last time!
+last time.
 
 ```js hl_lines="2 3 11"
 async function loadSlots(a, b, c, d, e) {
