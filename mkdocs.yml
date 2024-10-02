@@ -30,6 +30,8 @@ theme:
       primary: green
       accent: teal
 
+  logo: octicons/terminal-24
+
   features:
     - content.code.annotate
 
