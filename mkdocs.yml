@@ -1,6 +1,10 @@
 site_name: CTF Writeups - radiantBear
 site_description: Learn how a variety of CTF challenges work!
-site_url: https://web.engr.oregonstate.edu/~bairdn/ctf_writeups/site
+site_author: radiantBear (Nate Baird)
+site_url: https://web.engr.oregonstate.edu/~bairdn/ctf_writeups/
+repo_name: GitHub
+repo_url: https://github.com/radiantBear/ctf-writeups
+
 theme:
   name: material
 
@@ -36,10 +40,6 @@ theme:
 
   features:
     - content.code.annotate
-
-plugins:
-  - search:
-      enabled: false
 
 markdown_extensions:
   - attr_list
