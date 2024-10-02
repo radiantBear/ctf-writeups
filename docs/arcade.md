@@ -20,7 +20,7 @@ app.get('/breakout', (req, res, next) => {
 
     // Score needs to be a number
     const score = parseInt(req.query.score, 10);
-    if (isNaN(score)) {
+    if (isNaN(score)) { // (1)!
         res.status(400).send("Hmmm");
         return;
     }
@@ -33,6 +33,11 @@ app.get('/breakout', (req, res, next) => {
     }
 });
 ```
+
+1.  Make note of this line! It's going to be interesting later...
+
+This means that the slow-moving ball is actually a liability for completing the challenge
+in a reasonable timeframe. Let's see if we can speed that up!
 
 ## Raffle
 Here's an explanation for the second half of the challenge

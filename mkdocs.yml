@@ -29,6 +29,11 @@ theme:
         name: Switch to system preference
       primary: green
       accent: teal
+
+  features:
+    - content.code.annotate
+
+
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
