@@ -33,6 +33,9 @@ theme:
   features:
     - content.code.annotate
 
+plugins:
+  - search:
+      enabled: false
 
 markdown_extensions:
   - pymdownx.highlight:
