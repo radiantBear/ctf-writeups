@@ -170,3 +170,35 @@ statement will evaluate to `false` as well, meaning we found a way to bypass the
 4 u!" message without needing to guess all the correct numbers! If we do the same thing 
 for each field, we should make it to the `#!js else` block and get the flag returned to 
 us!
+
+Unfortunately, the app frontend will only let us submit numeric input, so let's take a 
+look at its source and see if we can find a way to send a spoofed GET request like we did
+last time!
+
+```js hl_lines="2 3 11"
+async function loadSlots(a, b, c, d, e) {
+    let response = await fetch(`/raffle?field1=${a}&field2=${b}&field3=${c}&field4=${d}&field5=${e}`);
+    let results = await response.json()
+    let slots = Array(numSlots).fill().map((element, index) => ({
+        yOffset: 0,
+        targetIcon: results.winningDigits[index],
+        spinning: true,
+        speed: slotSpeed,
+        spinCount: index
+    }));
+    flag = results.flag
+    return slots;
+}
+```
+
+Sweet! It looks like if we just make a GET request to `/raffle` with non-numeric strings
+for each field and parse the response as JSON, we should get our flag in the response's 
+`.flag` property. Let's try it out: 
+
+```js
+const data = await fetch('/raffle?field1=@&field2=@&field3=@&field4=@&field5=@');
+console.log(await data.json());
+```
+
+And with that, we completed tonight's challenge! It was a great refresher after taking the
+summer off.
