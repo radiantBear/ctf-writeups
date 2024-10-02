@@ -1,0 +1,19 @@
+name: Deploy to CoE flip Server
+on:
+    push:
+        branches: [ main ]
+jobs:
+    deploy-to-flip:
+        runs-on: ubuntu-latest
+        needs: build-and-test
+        environment: 
+            name: flip
+        steps:
+            - name: Deploy to flip
+              uses: appleboy/ssh-action@v0.1.10
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                command_timeout: 30m
+                script: ~/web_staging/update_ctf_writeups.sh
