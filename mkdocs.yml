@@ -1,0 +1,4 @@
+site_name: CTF Writeups - radiantBear
+site_url: https://web.engr.oregonstate.edu/~bairdn/ctf_writeups/site
+theme:
+  name: material
