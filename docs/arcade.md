@@ -1,6 +1,5 @@
 ---
 description: Learn how to solve the challenges from OSUSEC's first 2024-2025 school year meeting!
-status: new
 ---
 
 # 09/30/24 - Arcade
