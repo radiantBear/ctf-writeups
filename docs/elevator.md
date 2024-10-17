@@ -1,6 +1,5 @@
 ---
 description: Learn how to solve the challenges from OSUSEC's second 2024-2025 school year meeting!
-status: new
 ---
 
 # 10/07/24 - Elevator
