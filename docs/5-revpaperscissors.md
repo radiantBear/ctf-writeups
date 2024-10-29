@@ -226,7 +226,7 @@ invalid_choice_pair = (
 )
 same_choice = (choice == u)
 
-if not invalid_u_choice_pair and not same_choice:
+if not invalid_choice_pair and not same_choice:
     print("You won this round!")
 ```
 
